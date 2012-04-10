@@ -1,0 +1,21 @@
+{
+  "author": "AJ ONeal <coolaj86@gmail.com> (http://coolaj86.info/)",
+  "name": "tolmey-example",
+  "description": "A nice web app that uses tolmey for kicks",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/SpotterRF/Tolmey.git"
+  },
+  "main": "lib/app.js",
+  "browserDependencies": {
+      "jeesh": "*"
+    , "tolmey": "0.5.x"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
