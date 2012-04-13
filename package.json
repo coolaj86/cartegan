@@ -1,0 +1,26 @@
+{
+  "author": "AJ ONeal <coolaj86@gmail.com> (http://coolaj86.info/)",
+  "name": "tolmey-cache-server",
+  "description": "A simple server that caches map tiles",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/SpotterRF/Tolmey.git"
+  },
+  "main": "lib/index",
+  "scripts": {
+    "test": "node server"
+  },
+  "dependencies": {
+    "ahr2": "2.x",
+    "sequence": "2.x",
+    "join": "2.x",
+    "connect_router": "1.x",
+    "steve": "0.5.x"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
