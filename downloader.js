@@ -38,10 +38,6 @@
           }
 
           join = Join();
-
-          sequences.forEach(function (seq) {
-            seq.then(join.add());
-          });
         }
       , add: function (fn) {
           mod = (mod % sequences.length);
@@ -50,6 +46,13 @@
         }
       , when: function (cb) {
           join.when(cb);
+        }
+      , start: function () {
+          process.nextTick(function () {
+            sequences.forEach(function (seq) {
+              seq.then(join.add());
+            });
+          });
         }
     };
 
@@ -76,6 +79,7 @@
   // prototype-itize and subclass as EventEmitter
   function download(callback, tiles, strategy) {
     var emitter = new EventEmitter()
+      , maxThreads = 4
       , parallel = Parallel(maxThreads)
       ;
 
@@ -133,9 +137,11 @@
 
         fs.lstat(newfilepath, function (err, stat) {
           if (!stat) {
+            sys.print('.');
             emitter.emit('cache-miss', tile, url);
             getTile();
           } else {
+            sys.print('+');
             emitter.emit('cache-hit', tile, url);
             next();
           }
