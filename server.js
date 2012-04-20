@@ -16,7 +16,7 @@
 
     emitter = downloader(function () {
       console.log('all done');
-      res.end('it worketh oh so well');
+      res.end('it worketh oh so well\n');
     }, tiles, tolmey.strategies.google);
 
     emitter.on('error', function () {

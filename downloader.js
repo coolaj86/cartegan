@@ -58,7 +58,12 @@
             ;
 
           if (err) {
-            console.error('blah');
+            if (res.statusCode == 404) {
+              sys.print('-');
+              fs.writeFile(newfilepath, new Buffer(0));
+            } else {
+              console.error('some other error retrieving image');
+            }
             //emitter.emit('error', err, '0');
             next();
             return;
