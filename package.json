@@ -12,9 +12,8 @@
     "test": "node server"
   },
   "dependencies": {
+    "lateral": "2.x",
     "ahr2": "2.x",
-    "sequence": "2.x",
-    "join": "2.x",
     "connect_router": "1.x",
     "steve": "0.5.x"
   },

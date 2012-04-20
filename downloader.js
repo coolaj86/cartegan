@@ -8,58 +8,8 @@
     , request = require('ahr2')
     , strategies = require('../strategies')
     , EventEmitter = require('events').EventEmitter
+    , Lateral = require('lateral')
     ;
-
-      
-  // TODO factor out parallel code into module
-  var Sequence = require('sequence')
-    , Join = require('join')
-    ;
-
-  // should be more like sequence than join
-  function Parallel(_nThreads) {
-    var nThreads = _nThreads || 4
-      , mod = 0
-      , sequences = []
-      , parallel
-      , join
-      ;
-
-    parallel = {
-        setThreads: function (_nThreads) {
-          var i
-            ;
-
-          nThreads = _nThreads;
-          
-          sequences = [];
-          for (i = 0; i < nThreads; i += 1) {
-            sequences.push(Sequence());
-          }
-
-          join = Join();
-        }
-      , add: function (fn) {
-          mod = (mod % sequences.length);
-          sequences[mod].then(fn);
-          mod += 1;
-        }
-      , when: function (cb) {
-          join.when(cb);
-        }
-      , start: function () {
-          process.nextTick(function () {
-            sequences.forEach(function (seq) {
-              seq.then(join.add());
-            });
-          });
-        }
-    };
-
-    parallel.setThreads(nThreads);
-    
-    return parallel;
-  }
 
   // --funroll-loops
   function flattenTiles(coords) {
@@ -80,7 +30,7 @@
   function download(callback, tiles, strategy) {
     var emitter = new EventEmitter()
       , maxThreads = 4
-      , parallel = Parallel(maxThreads)
+      , lateral
       ;
 
     function toFilePath(tile) {
@@ -94,63 +44,64 @@
       );
     }
 
-    console.log('length', tiles.length);
-    tiles.forEach(function (tile, i) {
+    function handleTile(next, tile, i) {
       var url = strategies.google(tile, i)
         , newfilepath = toFilePath(tile)
         ;
 
       // have n threads requesting images at once
-      parallel.add(function (next) {
-        function getTile() {
-          request.get(url).when(function (err, ahr, data) {
-            // TODO test that data is buffer with jpg contents
-            // TODO keep count and halt on continual errors
+      function getTile() {
+        request.get(url).when(function (err, ahr, data) {
+          // TODO test that data is buffer with jpg contents
+          // TODO keep count and halt on continual errors
 
-            var filename
-              ;
+          var filename
+            ;
 
+          if (err) {
+            emitter.emit('error', err, '0');
+            next();
+            return;
+          }
+
+          filename = newfilepath + '.tmp';
+
+          fs.writeFile(filename, data, function (err) {
             if (err) {
-              emitter.emit('error', err, '0');
+              emitter.emit('error', err, '1');
               next();
               return;
             }
 
-            filename = newfilepath + '.tmp';
-
-            fs.writeFile(filename, data, function (err) {
+            fs.rename(filename, newfilepath, function (err) {
               if (err) {
-                emitter.emit('error', err, '1');
-                next();
-                return;
+                emitter.emit('error', err, '2');
               }
-
-              fs.rename(filename, newfilepath, function (err) {
-                if (err) {
-                  emitter.emit('error', err, '2');
-                }
-                next();
-              });
+              next();
             });
           });
-        }
-
-        fs.lstat(newfilepath, function (err, stat) {
-          if (!stat) {
-            sys.print('.');
-            emitter.emit('cache-miss', tile, url);
-            getTile();
-          } else {
-            sys.print('+');
-            emitter.emit('cache-hit', tile, url);
-            next();
-          }
         });
+      }
+
+      fs.lstat(newfilepath, function (err, stat) {
+        if (!stat) {
+          sys.print('.');
+          emitter.emit('cache-miss', tile, url);
+          getTile();
+        } else {
+          sys.print('+');
+          emitter.emit('cache-hit', tile, url);
+          next();
+        }
       });
 
-    });
+    }
 
-    parallel.when(function () {
+    console.log('length', tiles.length);
+
+    lateral = Lateral.create(handleTile, maxThreads);
+
+    lateral.add(tiles).when(function () {
       callback();
     });
   }
