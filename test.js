@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var tolmey = require('tolmey').create()
+  var tolmey = require('../tolmey').create()
     , download = require('./downloader')
       // TODO sequence should have parallel option
     , coords

@@ -10,7 +10,8 @@
   "main": "lib/app.js",
   "browserDependencies": {
       "jeesh": "*"
-    , "tolmey": "0.5.x"
+    , "tolmey": "0.6.x"
+    , "ahr2": "2.x"
   },
   "dependencies": {},
   "devDependencies": {},

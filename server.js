@@ -10,6 +10,8 @@
     ;
 
   function grabImages(req, res) {
+    req.params.zoom = 0;
+
     var tiles = tolmey.getFlatTileCoords(req.params)
       , emitter
       ;
