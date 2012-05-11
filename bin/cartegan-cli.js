@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /*jshint node:true laxcomma:true*/
 (function () {
   "use strict";
@@ -6,6 +7,10 @@
     , download = require('../lib/index')
       // TODO sequence should have parallel option
     , coords
+    , path = require('path')
+    , strategies = require(path.join('..', 'lib', 'strategies'))
+    , strategy
+    , provider
     ;
 
   // entire world at levels 0-6: 5k cake
@@ -29,6 +34,7 @@
     return tiles;
   }
 
+  /*
   coords = {
   //  "lat": 41.328768
   //, "lon": 19.467283
@@ -38,14 +44,26 @@
     , "maxZoom": 16
     , "radius": 35000
   };
+  */
 
+  coords = {
+    // cartegan <latitude> <longitude> <min-zoom> <max-zoom> <radius> <tile-provider>
+      lat: process.argv[2]
+    , lon: process.argv[3]
+    , zoom: process.argv[4]
+    , maxZoom: process.argv[5]
+    , radius: process.argv[6]
+  };
+
+  provider = process.argv[7];
+  strategy = strategies[coords.provider] || strategies.openStreetMap;
   download(
       function () {
         console.log('');
         console.log('all sequences complete');
       }
     , tolmey.getFlatTileCoords(coords)
-    , tolmey.strategies.google
+    , strategy
   );
 
 }());

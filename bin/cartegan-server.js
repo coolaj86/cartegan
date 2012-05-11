@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /*jshint es5:true laxcomma:true node:true*/
 (function () {
   "use strict";
