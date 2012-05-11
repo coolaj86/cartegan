@@ -1,8 +1,9 @@
+/*jshint node:true laxcomma:true*/
 (function () {
   "use strict";
 
-  var tolmey = require('../tolmey').create()
-    , download = require('./downloader')
+  var tolmey = require('tolmey').create()
+    , download = require('../lib/index')
       // TODO sequence should have parallel option
     , coords
     ;

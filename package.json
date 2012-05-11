@@ -1,11 +1,11 @@
 {
   "author": "AJ ONeal <coolaj86@gmail.com> (http://coolaj86.info/)",
-  "name": "tolmey-cache-server",
+  "name": "cartegan",
   "description": "A simple server that caches map tiles",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/SpotterRF/Tolmey.git"
+    "url": "git://github.com/SpotterRF/cartegan.git"
   },
   "main": "lib/index",
   "scripts": {
@@ -13,10 +13,15 @@
   },
   "dependencies": {
     "lateral": "2.x",
+    "tolmey": "0.6",
     "ahr2": "2.x",
     "connect_router": "1.x",
     "steve": "0.5.x"
   },
+  "bin": {
+    "cartegan-server": "./bin/cartegan-server.js",
+    "cartegan": "./bin/cartegan-cli.js"
+  }
   "devDependencies": {},
   "optionalDependencies": {},
   "engines": {

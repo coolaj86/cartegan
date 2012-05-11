@@ -1,3 +1,4 @@
+/*jshint node:true laxcomma:true*/
 (function () {
 
   var fs = require('fs')
@@ -25,5 +26,5 @@
     });
   }
     
-  fs.readdir(path.join(__dirname, 'tiles'), validateFilenames);
+  fs.readdir(pathName, validateFilenames);
 }());
