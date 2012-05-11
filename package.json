@@ -21,7 +21,7 @@
   "bin": {
     "cartegan-server": "./bin/cartegan-server.js",
     "cartegan": "./bin/cartegan-cli.js"
-  }
+  },
   "devDependencies": {},
   "optionalDependencies": {},
   "engines": {
