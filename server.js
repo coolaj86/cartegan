@@ -1,3 +1,4 @@
+/*jshint es5:true laxcomma:true node:true*/
 (function () {
   "use strict";
 
@@ -36,5 +37,22 @@
   app = connect();
   app.use(connect.static(__dirname + '/public'));
   app.use(connectRouter(router));
-  app.listen(4040);
+
+  function main() {
+    var port = process.argv[2] || process.env.PORT || 4040
+      , server
+      ;
+
+    function onListening() {
+      var address = server.address()
+        ;
+
+      console.log('Listening on', address.address + ':' + address.port);
+    }
+    server = app.listen(port, onListening);
+  }
+
+  if (require.main === module) {
+    main();
+  }
 }());
