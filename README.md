@@ -39,4 +39,4 @@ Downloading from a custom source
 ===
 
     If you have your own provider that you would like to use for the commandline tool, edit `strategies.js`
-    (likely in `/usr/local/lib/node_modules/crategan/lib/strategies.js`)
+    (likely in `/usr/local/lib/node_modules/cartegan/lib/strategies.js`)
