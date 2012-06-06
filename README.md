@@ -16,16 +16,14 @@ Install and Run (with Web GUI)
   1. Install and run Cartegan
 
         npm install -g cartegan
-        # cartegan-server <port> <tile-provider: openStreetMap|google|yahoo|bing>
-        cartegan-server 7070 google # defaults to openStreetMap
+        # cartegan-server <port>
+        cartegan-server 7070
 
-  2. Open Google Chrome to <http://localhost:7070>
+  2. Open [Google Chrome](http://google.com/chrome) to <http://localhost:7070>
   
-  3. You MUST ALLOW location sharing (and it's running locally on your computer anyway)
+  3. Pick GPS coordinates, a radius, and a scale (zoom)
 
-  4. Pick GPS coordinates, a radius, and a scale
-
-  5. Download! Tiles will be saved to `./cartegan-tiles` (in the current directory)
+  4. Download! Tiles will be saved to `./cartegan-tiles` (in the current directory)
 
 Note: In theory this will work on Windows... but it's untested. For best results use an Operating System.
 
@@ -38,5 +36,5 @@ Run without the Web GUI
 Downloading from a custom source
 ===
 
-    If you have your own provider that you would like to use for the commandline tool, edit `strategies.js`
-    (likely in `/usr/local/lib/node_modules/cartegan/lib/strategies.js`)
+If you have your own provider that you would like to use for the commandline tool, edit `strategies.js`
+(likely in `/usr/local/lib/node_modules/cartegan/lib/strategies.js`)
