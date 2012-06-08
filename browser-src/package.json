@@ -1,8 +1,8 @@
 {
   "author": "AJ ONeal <coolaj86@gmail.com> (http://coolaj86.info/)",
-  "name": "tolmey-example",
+  "name": "cartegan-webclient",
   "description": "A nice web app that uses tolmey for kicks",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/SpotterRF/Tolmey.git"

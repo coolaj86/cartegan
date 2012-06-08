@@ -123,8 +123,32 @@
     });
   }
 
+  function pushTiles(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    var address = $('#js-target-address').val()
+      ;
+
+    console.log(address);
+
+    request.post('/push/' + address).when(function (err, ahr2, data) {
+      if (err) {
+        console.error(err.message || err);
+      }
+      if (data && data.errors.length) {
+        data.errors.forEach(function (err) {
+          console.error(err.message || err);
+        });
+      }
+      console.log(err, data);
+      alert('done');
+    });
+  }
+
   $.domReady(function () {
-    $("body").delegate("form", "submit", displayMapTileForCoordinates);
+    $("body").delegate("form#lat_long", "submit", displayMapTileForCoordinates);
+    $("body").delegate("form#js-push-tiles", "submit", pushTiles);
     $("body").delegate("button#get-coords", "click", getNavigatorCoords);
   });
 

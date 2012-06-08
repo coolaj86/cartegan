@@ -19,8 +19,8 @@ html
 
     div(style='z-index: 10000')
       h1 Cartegan
-      p
-        | Enter a zoom level between 0 and 20, and hit the button to load the OpenStreetMap tile for your location.
+      p.
+        Enter a zoom level between 0 and 20, and hit the button to load the OpenStreetMap tile for your location.
       form#lat_long(name='lat_long')
 
         h2
@@ -84,6 +84,14 @@ html
         br
         br
         button#submit_button(type='submit') Downlad Tiles
+
+      form#js-push-tiles(name='push_tiles')
+        label(for='tiles-target') Push tile tarball to:
+        br
+        span http://
+        input#js-target-address(name='js-target-address', value='192.168.1.1:9999/')
+        button(type='submit') Upload Tiles
+
     //-
       h3 Other images
       ul#map-urls
