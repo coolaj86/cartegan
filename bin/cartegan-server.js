@@ -60,7 +60,7 @@
         request({
             method: "POST"
           , href: 'http://' + address
-          , body: buf
+          , encodedBody: buf
           , headers: {
               "content-type": "application/x-tar"
             }
