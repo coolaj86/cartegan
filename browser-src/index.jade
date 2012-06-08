@@ -1,98 +1,96 @@
 html
   head
     title Cartegan
-    script(src='pakmanaged.js', type='text/javascript')
+    link(rel='stylesheet', type='text/css', href='style.css')
   body
-    div(style='position: absolute; left:0; top:0; margin:0; padding:0; z-index: -10; opacity: 0.3;')
-      br
-      img#map-tile-0(src='')
-      img#map-tile-1(src='')
-      img#map-tile-2(src='')
-      br
-      img#map-tile-3(src='')
-      img#map-tile-4(src='', width='256px', height='256px')
-      img#map-tile-5(src='')
-      br
-      img#map-tile-6(src='')
-      img#map-tile-7(src='')
-      img#map-tile-8(src='')
+    .css-wrapper   
+      .css-nav
+        .css-logo
+          img(src='images/spotterrf-labs-white-logo.png', alt='')
+        span.css-title Cartegan
+      .css-triangle
+      .css-container
+        p
+          | Enter a zoom level between 0 and 20, and hit the button to load the OpenStreetMap tile for your location.
+        form#lat_long(name='lat_long')
+          h2
+            label(for='map-provider') Map Provider
+          select#map-provider(name='map-provider')
+            option(value='openStreetMap', selected='selected') OpenStreetMap.org
+            option(value='google') Google Maps (KeyHole)
+            option(value='bing') Bing Maps (Virtual Earth)
+            option(value='yahoo') Yahoo Maps (Nokia OVI)
+          //-  option(value='user') Custom
 
-    div(style='z-index: 10000')
-      h1 Cartegan
-      p.
-        Enter a zoom level between 0 and 20, and hit the button to load the OpenStreetMap tile for your location.
-      form#lat_long(name='lat_long')
+          //-
+            br
+            textarea#map-provider-user
+              | (function () {
+              |   "use strict";
+              |   
+              |   // write your custom function here
+              |   function toTile(tile, i) {
+              |     return 'http://maps.acme.com'
+              |       + '/'
+              |       + tile.zoom
+              |       + '/'
+              |       + tile.x    // longitude
+              |       + '/'
+              |       + tile.y    // latitude
+              |       + '.jpg'
+              |   }
+              |   
+              |   return toTile;
+              | }());
 
-        h2
-          label(for='map-provider') Map Provider
+          h2 Center Point of Map
+          .css-row
+            label(for='map-lon') Longitude (x)
+            input(name='map-lon')
+          .css-row
+            label(for='map-lat') Latitude (y)
+            input(name='map-lat')
+          .css-row
+            button#get-coords Use Current Location
+          .css-row
+            label(for='map-radius') Radius (in meters)
+            input(name='map-radius', type='number', value='500')
+          .css-row
+            label(for='map-zoom') Map Scale (Zoom)
+            select#map-resolution(name='map-zoom')
+              option(value='14') (14) 1 : 36K (9.6 m/px)
+              option(value='15') (15) 1 : 18K (4.8 m/px)
+              option(value='16') (16) 1 : 9,028 (2.4 m/px)
+              option(value='17', selected='selected') (17) 1 : 4,514 (1.2 m/px)
+              option(value='18') (18) 1 : 2,257 (60 cm/px)
+              option(value='19') (19) 1 : 1,129 (30 cm/px)
+              option(value='20') (20) 1 : 564 (15 cm/px)
+          .css-row
+            button#submit_button(type='submit') Downlad Tiles
+        form#js-push-tiles(name='push_tiles')
+          .css-row
+            label(for='tiles-target') Push tile tarball to:
+          .css-row
+            span http://
+            input#js-target-address(name='js-target-address', value='192.168.1.1:9999/')
+          .css-row
+            button(type='submit') Upload Tiles
+      //-
+        h3 Other images
+        ul#map-urls
+          li.map-url http://{{server}}
+      .css-tiles
         br
-        select#map-provider(name='map-provider')
-          option(value='openStreetMap', selected='selected') OpenStreetMap.org
-          option(value='google') Google Maps (KeyHole)
-          option(value='bing') Bing Maps (Virtual Earth)
-          option(value='yahoo') Yahoo Maps (Nokia OVI)
-        //-  option(value='user') Custom
+        img#map-tile-0(src='')
+        img#map-tile-1(src='')
+        img#map-tile-2(src='')
+        br
+        img#map-tile-3(src='')
+        img#map-tile-4(src='', width='256px', height='256px')
+        img#map-tile-5(src='')
+        br
+        img#map-tile-6(src='')
+        img#map-tile-7(src='')
+        img#map-tile-8(src='')
 
-        //-
-          br
-          textarea#map-provider-user
-            | (function () {
-            |   "use strict";
-            |   
-            |   // write your custom function here
-            |   function toTile(tile, i) {
-            |     return 'http://maps.acme.com'
-            |       + '/'
-            |       + tile.zoom
-            |       + '/'
-            |       + tile.x    // longitude
-            |       + '/'
-            |       + tile.y    // latitude
-            |       + '.jpg'
-            |   }
-            |   
-            |   return toTile;
-            | }());
-
-        br
-
-        h2 Center Point of Map
-        label(for='map-lon') Longitude (x)
-        input(name='map-lon')
-        br
-        label(for='map-lat') Latitude (y)
-        input(name='map-lat')
-        br
-        button#get-coords Use Current Location
-        br
-        label(for='map-radius') Radius (in meters)
-        input(name='map-radius', type='number', value='500')
-
-        br
-        br
-
-        label(for='map-zoom') Map Scale (Zoom)
-        select#map-resolution(name='map-zoom')
-          option(value='14') (14) 1 : 36K (9.6 m/px)
-          option(value='15') (15) 1 : 18K (4.8 m/px)
-          option(value='16') (16) 1 : 9,028 (2.4 m/px)
-          option(value='17', selected='selected') (17) 1 : 4,514 (1.2 m/px)
-          option(value='18') (18) 1 : 2,257 (60 cm/px)
-          option(value='19') (19) 1 : 1,129 (30 cm/px)
-          option(value='20') (20) 1 : 564 (15 cm/px)
-
-        br
-        br
-        button#submit_button(type='submit') Downlad Tiles
-
-      form#js-push-tiles(name='push_tiles')
-        label(for='tiles-target') Push tile tarball to:
-        br
-        span http://
-        input#js-target-address(name='js-target-address', value='192.168.1.1:9999/')
-        button(type='submit') Upload Tiles
-
-    //-
-      h3 Other images
-      ul#map-urls
-        li.map-url http://{{server}}
+script(src='pakmanaged.js', type='text/javascript')

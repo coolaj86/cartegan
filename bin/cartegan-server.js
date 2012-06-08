@@ -57,7 +57,14 @@
     tar = TarIt.create(); // accept defaults
     tar.when(function (filename) {
       fs.readFile(filename, function (buf) {
-        request.post('http://' + address, null, buf).when(function (err, ahr2, data) {
+        request({
+            method: "POST"
+          , href: 'http://' + address
+          , body: buf
+          , headers: {
+              "content-type": "application/x-tar"
+            }
+        }).when(function (err, ahr2, data) {
           if (err) {
             console.error('error with post');
             console.error(err);
