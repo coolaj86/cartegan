@@ -52,6 +52,7 @@ html
             input(name='map-lat')
           .css-row
             button#get-coords Use Current Location
+          h2 Map Area
           .css-row
             label(for='map-radius') Radius (in meters)
             input(name='map-radius', type='number', value='500')
@@ -68,9 +69,9 @@ html
           .css-row
             button#submit_button(type='submit') Download Tiles
         form#js-push-tiles(name='push_tiles')
+          h2 Upload Target
           .css-row
-            label(for='tiles-target') Push tile tarball to:
-          .css-row
+            label(for='tiles-target') POST tiles to: 
             span http://
             input#js-target-address(name='js-target-address', value='192.168.1.1:9999/')
           .css-row
