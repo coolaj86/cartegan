@@ -2,7 +2,7 @@
   "author": "AJ ONeal <coolaj86@gmail.com> (http://coolaj86.info/)",
   "name": "cartegan",
   "description": "A simple server that caches map tiles",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/SpotterRF/cartegan.git"
