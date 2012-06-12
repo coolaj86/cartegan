@@ -56,28 +56,29 @@
     // do this in the server rather than through CORS XHR2
     tar = TarIt.create(); // accept defaults
     tar.when(function (filename) {
-      fs.readFile(filename, function (buf) {
+      console.log('waiting for a file sync');
+      setTimeout(function () {
+      fs.readFile(filename, function (err, buf) {
+        console.log('msg length:', buf.length);
         request({
-            method: "POST"
+            method: 'POST'
           , href: 'http://' + address
           , encodedBody: buf
           , headers: {
-              "content-type": "application/x-tar"
+                "content-type": "application/x-tar"
+              //, "expect": "100-continue"
             }
         }).when(function (err, ahr2, data) {
           if (err) {
-            console.error('error with post');
             console.error(err);
-            res.error(err);
           }
-
-          if (data instanceof Buffer) {
-            data = data.toString('utf8');
+          if (data && data.errors) {
+            console.error(data.errors);
           }
-          console.log(data);
-          res.json(data);
+          console.log('happy are we', err, data && data.toString('utf8'));
         });
       });
+      }, 1000);
     });
   }
 
