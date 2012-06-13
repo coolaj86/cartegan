@@ -53,7 +53,7 @@
       , mapProvider = userCoord.mapProvider
       , coord = converter.getMercatorFromGPS(lat, lon, zoom)
       , url = converter.getTileURL(mapProvider.toLowerCase(), coord.x, coord.y, zoom)
-      , maxRadius = (Math.pow(2, (18 - zoom)) * 1000)
+      , maxRadius = (Math.pow(2, (17 - zoom)) * 1000)
       , completeImg
       ;
 
@@ -93,7 +93,7 @@
     if (radius > maxRadius) {
       alert('Changing your radius to ' + maxRadius
         + ' which is the maximum allowed radius for zoom level ' + zoom
-        + ' (just a little over 250 tiles).'
+        + ' (just a little over 1000 tiles).'
       );
       radius = maxRadius;
     }
@@ -135,11 +135,15 @@
     request.post('/push/' + address).when(function (err, ahr2, data) {
       if (err) {
         console.error(err.message || err);
+        alert('Timeout while waiting for tiles to download (probably still running in the background)');
+        return;
       }
       if (data && data.errors.length) {
         data.errors.forEach(function (err) {
           console.error(err.message || err);
         });
+        alert("Some error(s) encountered: " + data.errors.join(' | '));
+        return;
       }
       console.log(err, data);
       alert('done');
