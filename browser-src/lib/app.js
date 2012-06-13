@@ -53,7 +53,7 @@
       , mapProvider = userCoord.mapProvider
       , coord = converter.getMercatorFromGPS(lat, lon, zoom)
       , url = converter.getTileURL(mapProvider.toLowerCase(), coord.x, coord.y, zoom)
-      , maxRadius = (Math.pow(2, (17 - zoom)) * 1000)
+      , maxRadius = (Math.pow(2, (20 - zoom)) * 1000)
       , completeImg
       ;
 
