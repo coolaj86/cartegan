@@ -48,15 +48,18 @@
 
   coords = {
     // cartegan <latitude> <longitude> <min-zoom> <max-zoom> <radius> <tile-provider>
-      lat: process.argv[2]
-    , lon: process.argv[3]
-    , zoom: process.argv[4]
-    , maxZoom: process.argv[5]
-    , radius: process.argv[6]
+      lat: parseFloat(process.argv[2])
+    , lon: parseFloat(process.argv[3])
+    , zoom: parseInt(process.argv[4], 10)
+    , maxZoom: parseInt(process.argv[5], 10)
+    , radius: parseFloat(process.argv[6])
   };
 
   provider = process.argv[7];
-  strategy = strategies[coords.provider] || strategies.openStreetMap;
+  // TODO one or the other
+  strategy = strategies[provider] || strategies.openStreetMap;
+  coords.mappingSystem = provider;
+  console.log('coords', coords);
   download(
       function () {
         console.log('');

@@ -22,6 +22,7 @@
 
     console.log(req.params);
 
+    console.log('getFlatTileCoords', req.params);
     var tiles = tolmey.getFlatTileCoords(req.params)
       , emitter
       ;
