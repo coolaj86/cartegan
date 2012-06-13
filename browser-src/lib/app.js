@@ -53,7 +53,7 @@
       , mapProvider = userCoord.mapProvider
       , coord = converter.getMercatorFromGPS(lat, lon, zoom)
       , url = converter.getTileURL(mapProvider.toLowerCase(), coord.x, coord.y, zoom)
-      , maxRadius = (Math.pow(2, (20 - zoom)) * 1000)
+      , maxRadius = (Math.pow(2, (19 - zoom)) * 1000)
       , completeImg
       ;
 
@@ -93,7 +93,7 @@
     if (radius > maxRadius) {
       alert('Changing your radius to ' + maxRadius
         + ' which is the maximum allowed radius for zoom level ' + zoom
-        + ' (just a little over 1000 tiles).'
+        + ' (just a little under 2000 tiles).'
       );
       radius = maxRadius;
     }
